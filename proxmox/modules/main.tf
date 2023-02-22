@@ -1,12 +1,3 @@
-# Render template for provisioning script
-data "template_file" "provisioning_script" {
-  template  = file("${path.module}/${var.provisioning_script_path}")
-  vars = {
-    user = var.user
-    timezone = var.timezone
-  }
-}
-
 # Create the VM
 resource "proxmox_vm_qemu" "proxmox-vm" {
 
@@ -82,20 +73,6 @@ resource "proxmox_vm_qemu" "proxmox-vm" {
     private_key = file(var.ssh_key_private)
   }
 
-  # provision vm with basic config
-  provisioner "file" {
-    destination = "/tmp/provision.sh"
-    content     = data.template_file.provisioning_script.rendered
-  }
-
-  provisioner "remote-exec" {
-    # on_failure = continue
-    inline = [
-      "sudo hostnamectl set-hostname ${var.hostnames[count.index]}",
-      "sudo chmod +x /tmp/provision.sh",
-      "sudo /tmp/provision.sh"
-    ]
-  }
 
   # Ignore network changes since TF generates a new MAC address
   # on every apply causing the vm to upate on every apply.
