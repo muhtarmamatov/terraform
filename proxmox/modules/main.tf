@@ -24,10 +24,10 @@ resource "proxmox_vm_qemu" "proxmox-vm" {
   os_type = "cloud-init"
 
   # resources
-  memory = var.memory
+  memory = var.memories_list[count.index]
   balloon = var.balloon
-  sockets = var.sockets
-  cores = var.cores
+  sockets = var.sockets_list[count.index]
+  cores = var.cores_list[count.index]
   cpu = "kvm64"
   numa = true
 
@@ -49,7 +49,7 @@ resource "proxmox_vm_qemu" "proxmox-vm" {
   disk {
     type = "virtio"
     storage = var.storage_name
-    size = var.disksize
+    size = var.disksize_list[count.index]
   }
 
   # cloud init

@@ -33,6 +33,28 @@ variable "vmids" {
 	type 				= list(number)
 }
 
+variable "memories_list"{
+	description = "Value must be list, all lists must have equal length!"
+	type = list(number)
+	default = []
+}
+
+variable "sockets_list"{
+	description = "Value must be list, all lists must have equal length!"
+	type = list(number)
+	default = []
+}
+variable "cores_list"{
+	description = "Value must be list, all lists must have equal length!"
+	type = list(number)
+	default = []
+}
+variable "disksize_list"{
+	description = "Value must be list, all lists must have equal length!"
+	type = list(string)
+	default = []
+}
+
 variable "ipv4s" {
 	description = "Value must be list, all lists must have equal length!"
 	type 				= list(string)
@@ -41,6 +63,11 @@ variable "ipv4s" {
 variable "hostnames" {
 	description = "Value must be list, all lists must have equal length!"
 	type 				= list(string)
+}
+variable "nameserver_list"{
+	description = "Value must be list, all lists must have equal length!"
+	type = list(number)
+	default = []
 }
 
 variable "os_description" { default = "" }
